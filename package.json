@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/lxchuan12/learn-nodejs/issues"
   },
-  "homepage": "https://github.com/lxchuan12/learn-nodejs#readme"
+  "homepage": "https://github.com/lxchuan12/learn-nodejs#readme",
+  "devDependencies": {
+    "puppeteer": "^1.7.0"
+  }
 }
