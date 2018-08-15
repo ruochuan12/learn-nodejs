@@ -12,6 +12,9 @@ const iPhone = devices['iPhone X'];
     await page.goto('https://lxchuan12.github.io');
 
     // await page.goto('https://www.yunpanjingling.com/');
+    // await page.screenshot({
+    //     path: path.join(__dirname, `./screenshot/${Date.now()}.png`),
+    // });
     // await page.$('.word');
     // await page.keyboard.type('imooc', {delay: 100});
     // await page.tap('.btn-submit');
