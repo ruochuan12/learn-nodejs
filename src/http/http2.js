@@ -1,14 +1,18 @@
 const http = require('http');
+const path = require('path');
+const fs = require('fs');
 const conf = {
     hostname: '127.0.0.1',
-    port: '9527',
+    port: '9526',
 };
+
+const indexPath = path.join(__dirname, './index.html');
+const html = fs.readFileSync(indexPath, 'utf8');
+// console.log(html);
 const server = http.createServer((req, res) => {
     res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.end("{data: [{name: 'xuanyuan', age: 20}], msg: 'web'}");
+    res.setHeader('Content-Type', 'text/html');
+    res.end(html);
 });
 
 server.listen(conf.port, conf.hostname, () => {

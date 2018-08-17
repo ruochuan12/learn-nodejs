@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>测试跨域等</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        测试跨域相关
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+        <!-- <script src="" async defer></script> -->
+        <script>
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = () => {
+                if(xhr.readyState === 4){
+                    if((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304){
+                        // callback && callback();
+                        let data;
+                        try{
+                            data = JSON.parse(xhr.responseText);
+                        }
+                        catch(e){
+                            console.log(e, 'err');
+                            data = xhr.responseText;
+                        }
+                        console.log(data);
+                    }
+                    else{
+                        console.log('Request was unsuccessful:' + xhr.status);
+                    }
+                }
+            }
+            xhr.open('POST', 'http://127.0.0.1:9527');
+            xhr.setRequestHeader('content-type', 'application/json');
+            xhr.send("{name: 12}");
+        </script>
+    </body>
+</html>
