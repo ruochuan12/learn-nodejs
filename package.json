@@ -4,7 +4,9 @@
   "description": "learn-nodejs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "reactMiniBook": "node src/puppeteer/reactMiniBook.js",
+    "mergePdf": "node src/puppeteer/mergePdf.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,7 @@
     "puppeteer": "^1.7.0"
   },
   "dependencies": {
-    "pdf-merge": "^1.0.4"
+    "pdf-merge": "^1.0.4",
+    "rimraf": "^2.6.2"
   }
 }

@@ -7,6 +7,42 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
+const rm = require('rimraf');
+
+/**
+ * @desc 返回路径
+ * @author luoxiaochuan <lxchuan12@163.com>
+ * @date 2018-08-25
+ * @param {String} dir, dir2 字符串
+ * @return {String} 路径
+ */
+function resolve(dir, dir2 = ''){
+    return path.posix.join(__dirname, './', dir, dir2);
+}
+
+/**
+ * @desc 获取元素 单个
+ * @author luoxiaochuan <lxchuan12@163.com>
+ * @date 2018-08-25
+ * @param {Stirng} selector 选择器
+ * @param {Node} dom 节点
+ * @return {Node} dom 节点
+ */
+function $(selector, node){
+    return (node || document).querySelector(selector);
+}
+
+/**
+ * @desc 获取元素 集合
+ * @author luoxiaochuan <lxchuan12@163.com>
+ * @date 2018-08-25
+ * @param {Stirng} selector 选择器
+ * @param {Node} dom 节点
+ * * @return {NodeList} dom 节点
+ */
+function $$(selector, node){
+    return (node || document).querySelectorAll(selector);
+}
 
 
 (async () => {
@@ -16,7 +52,7 @@ const fs = require('fs');
     });
     let page = await browser.newPage();
 
-    console.log('first page start...');
+    console.log('start load first page...');
 
     await page.goto('http://huziketang.mangojuice.top/books/react');
     await page.waitFor(2000);
@@ -24,7 +60,7 @@ const fs = require('fs');
     // 说明
     const license = `
         <p>
-            本<a href="http://huziketang.mangojuice.top/books/react/" target="_blank">《React.js小书》</a>  PDF版本
+            本<a href="http://huziketang.mangojuice.top/books/react/" target="_blank">《React.js小书》</a>的PDF版本
             <br />
             是由<a href="http://lxchuan12.github.io" target="_blank">
                 轩辕Rowboat
@@ -39,26 +75,10 @@ const fs = require('fs');
         <p>
     `;
 
-    let wh = await page.evaluate((license) => {
-        const content = document.querySelector('#wrapper .content');
-        const div = document.createElement('div');
-        div.innerHTML = `
-            <div class="block">
-                <h2>《Reac.js 小书》 PDF版本说明</h2>
-                ${license}
-            </div>
-        `;
-        content.appendChild(div);
-        return {
-            width: 1920,
-            height: document.body.clientHeight
-        }
-    }, license);
-
     // 简单配置
     const config = {
         // 输出路径
-        outputPath: './reactMiniBook/',
+        outputPath: 'reactMiniBook1/',
         // 生成pdf时的页边距
         margin: {
             top: '60px',
@@ -70,31 +90,62 @@ const fs = require('fs');
         displayHeaderFooter: true,
     };
 
+    let wh = await page.evaluate((license) => {
+        const content = document.querySelector('#wrapper .content');
+        const div = document.createElement('div');
+        div.innerHTML = `
+            <div class="block">
+                <h2>《Reac.js 小书》的PDF版本说明</h2>
+                ${license}
+            </div>
+        `;
+        content.appendChild(div);
+        return {
+            width: 1920,
+            height: document.body.clientHeight
+        }
+    }, license);
+
     await page.setViewport(wh);
 
     await page.waitFor(2000);
 
-    const outputPath = path.posix.join(__dirname, config.outputPath);
+    const outputPath = resolve(config.outputPath);
 
     let isExists = fs.existsSync(outputPath);
 
     console.log('isExists', isExists, 'outputPath', outputPath);
+
+    function mkdirOutputpath(){
+        try{
+            fs.mkdirSync(outputPath);
+            console.log('mkdir success!');
+        } catch(e){
+            console.log('mkdir fail!');
+        }
+    };
     // 如果不存在 则创建
     if(!isExists){
-        fs.mkdirSync(outputPath);
+        mkdirOutputpath();
     }
-    // else{
-    //     // 存在，则删除该目录下的文件 简单处理
-    //     fs.rmdirSync(outputPath);
-    // }
+    else{
+        // 存在，则删除该目录下的文件重新生成PDF 简单处理
+       rm(outputPath, (err) => {
+           if(err) throw err;
+           console.log('remove the files is success!');
+           mkdirOutputpath();
+       });
+    }
+
+    console.log('outputPath', outputPath, resolve(outputPath, '0. React 小书 目录.pdf'));
 
     await page.pdf({
-        path: path.posix.join(outputPath, '0. React 小书 目录.pdf'),
+        path: resolve(outputPath, '0. React 小书 目录.pdf'),
         margin: config.margin,
         displayHeaderFooter: config.displayHeaderFooter,
     });
 
-    console.log('fisrt page end!');
+    console.log('make pdf success for fisrt page!');
     await page.close();
 
 
@@ -121,7 +172,7 @@ const fs = require('fs');
       });
     });
 
-    console.log('aLinkArr', aLinkArr);
+    console.log('aLinkArr', aLinkArr, aLinkArr.length);
 
     for (let i = 1; i < aLinkArr.length; i++) {
       let a = aLinkArr[i];
@@ -151,7 +202,7 @@ const fs = require('fs');
         let gapNode = document.querySelector('.share-block.margin-bottom-gap');
         if(gapNode){
             // 最末尾声明
-            if(i === 46){
+            if(i === aLinkArr.length - 1){
                 gapNode.querySelector('p').innerHTML = license;
             }
             else{
@@ -185,11 +236,13 @@ const fs = require('fs');
       await page.waitFor(2000);
 
       await page.pdf({
-        path: path.posix.join(outputPath, `${a.text}.pdf`),
+        path: resolve(outputPath, `${a.text}.pdf`),
         margin: config.margin,
         displayHeaderFooter: config.displayHeaderFooter,
       });
     }
+
+    console.log('all success!');
 
     browser.close();
 
