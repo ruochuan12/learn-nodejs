@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/lxchuan12/learn-nodejs#readme",
   "devDependencies": {
+    "fs-extra": "^7.0.0",
     "puppeteer": "^1.7.0"
+  },
+  "dependencies": {
+    "pdf-merge": "^1.0.4"
   }
 }
