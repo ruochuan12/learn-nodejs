@@ -11,42 +11,43 @@ const fs = require('fs');
  * @return {String} 路径
  */
 function resolve(dir, dir2 = ''){
-    return path.posix.join(__dirname, './', dir, dir2);
+	return path.posix.join(__dirname, './', dir, dir2);
 }
 
+// 配置
+const config = {
+	entry: 'reactMiniBook/',
+	output: 'reactMiniBookMerged/'
+};
+
 // 
-const filenameArr = fs.readdirSync(resolve('reactMiniBook/'));
+const filenameArr = fs.readdirSync(resolve(config.entry));
 
 const sortedFilenameArr = filenameArr.sort((str1, str2) => {
-    let regex = /^(\d{1,2})\./;
-    let a = +str1.match(regex)[1];
-    let b = +str2.match(regex)[1];
-    return a - b;
+	let regex = /^(\d{1,2})\./;
+	let a = +str1.match(regex)[1];
+	let b = +str2.match(regex)[1];
+	return a - b;
 });
 
 // console.log(sortedFilenameArr);
 
 const files = sortedFilenameArr.map((el) => {
-    return resolve(`reactMiniBook/${el}`);
+	return resolve(`${config.entry}${el}`);
 });
 
 console.log('files', files);
-
-// const files = [
-// 	path.join(__dirname, './reactMiniBook/0. React小书 目录.pdf'),
-// 	path.join(__dirname, './reactMiniBook/1. React.js 简介.pdf'),
-// ];
 
 console.log('let\'s start merge...');
 
 const filename = `React小书（完整版）-作者：胡子大哈-${Date.now()}.pdf`;
 
-const output = resolve(`reactMiniBookMerged/${filename}`);
+const output = resolve(`${config.output}${filename}`);
 
 // Save as new file
 PDFMerge(files, {
-    output: output,
+	output: output,
 })
 .then((buffer) => {
-    console.log('merge success!');
+	console.log('merge success!');
 });
