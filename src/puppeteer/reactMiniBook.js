@@ -114,7 +114,7 @@ function $$(selector, node){
 
 	const outputPath = resolve(config.outputPath);
 
-	let isExists = fs.existsSync(outputPath);
+	const isExists = fs.existsSync(outputPath);
 
 	console.log('isExists', isExists, 'outputPath', outputPath);
 
@@ -126,9 +126,9 @@ function $$(selector, node){
 	function mkdirOutputpath(){
 		try{
 			fs.mkdirSync(outputPath);
-			console.log('mkdir success!');
+			console.log('mkdir is successful!');
 		} catch(e){
-			console.log('mkdir fail!');
+			console.log('mkdir is failed!', e);
 		}
 	};
 	// 如果不存在 则创建
@@ -139,7 +139,7 @@ function $$(selector, node){
 		// 存在，则删除该目录下的文件重新生成PDF 简单处理
 	   rm(outputPath, (err) => {
 		   if(err) throw err;
-		   console.log('remove the files is success!');
+		   console.log('remove the files is successful!');
 		   mkdirOutputpath();
 	   });
 	}
@@ -160,7 +160,7 @@ function $$(selector, node){
 		format: config.format,
 	});
 
-	console.log('make pdf success for fisrt page!');
+	console.log('created pdf for fisrt page is successful!');
 
 	await page.close();
 
@@ -266,7 +266,7 @@ function $$(selector, node){
 
 	}
 
-	console.log('all success!');
+	console.log('all is successful!');
 
 	browser.close();
 

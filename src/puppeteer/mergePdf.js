@@ -38,6 +38,30 @@ const files = sortedFilenameArr.map((el) => {
 
 console.log('files', files);
 
+const outputPath = resolve(config.output);
+
+const isExists = fs.existsSync(outputPath);
+
+console.log('isExists', isExists, 'outputPath', outputPath);
+
+/**
+ * @desc 创建输出路径
+ * @author luoxiaochuan <lxchuan12@163.com>
+ * @date 2018-08-25
+ */
+function mkdirOutputpath(){
+	try{
+		fs.mkdirSync(outputPath);
+		console.log('mkdir is successful!');
+	} catch(e){
+		console.log('mkdir is failed!', e);
+	}
+};
+// 如果不存在 则创建
+if(!isExists){
+	mkdirOutputpath();
+}
+
 console.log('let\'s start merge...');
 
 const filename = `React小书（完整版）-作者：胡子大哈-${Date.now()}.pdf`;
@@ -49,5 +73,5 @@ PDFMerge(files, {
 	output: output,
 })
 .then((buffer) => {
-	console.log('merge success!');
+	console.log('merge is successful!');
 });
