@@ -17,6 +17,14 @@ router.get('/user', ctx => {
     ctx.body = '这是user页';
 });
 
+router.get('/json', ctx => {
+    ctx.body = {
+        data: [],
+        msg: '信息',
+        code: '0',
+    };
+});
+
 router.get('/post', ctx => {
     ctx.body = ctx.body = ctx.request.body;
 });
@@ -34,7 +42,7 @@ router.get('/async', async ctx => {
     ctx.body = '这是异步处理页';
 })
 
-app.use(router.routers())
+app.use(router.routes())
     .use(router.allowedMethods());
 
 // response
