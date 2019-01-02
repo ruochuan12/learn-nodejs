@@ -200,6 +200,8 @@ function $$(selector, node){
 	  await page.waitFor(2000);
 
 	  console.log('go to ', a.href);
+	  page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+	//   await page.evaluate(() => console.log(`204 url is ${location.href}`));
 
 	  let wh = await page.evaluate((i, a, aLinkArr, aPrev, aNext, license) => {
 		// 隐藏左侧导航，便于生成pdf
@@ -214,7 +216,7 @@ function $$(selector, node){
 		}
 		// 设置title 加上序号 页眉使用。
 		document.title = `${a.text} | React.js 小书`;
-		console.log(document.title);
+		console.log(217, document.title);
 		// 隐藏 传播一下知识也是一个很好的选择
 		let gapNode = document.querySelector('.share-block.margin-bottom-gap');
 		if(gapNode){
