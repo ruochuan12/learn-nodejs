@@ -63,7 +63,7 @@ function $$(selector, node){
 			本<a href="http://huziketang.mangojuice.top/books/react/" target="_blank">《React.js小书》</a>的PDF版本
 			<br />
 			是由<a href="http://lxchuan12.github.io" target="_blank">
-				轩辕Rowboat
+				若川
 			</a>
 			<br/>
 			使用<a href="https://github.com/GoogleChrome/puppeteer" target="_blank">node 库 puppeteer爬虫生成</a>，
