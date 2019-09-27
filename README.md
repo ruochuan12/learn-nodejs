@@ -7,4 +7,4 @@ learn-nodejs
 - [x] 页眉页脚、页边距等设置
 - [x] 把每一个小节的`pdf`合并成一个整的`pdf`
 - [x] 最末尾 声明：仅供学习交流，严禁用于商业用途
-- [x] 写一篇文章：[前端使用puppeteer 爬虫生成《React.js 小书》PDF并合并](https://segmentfault.com/a/1190000016198363)
+- [x] 写一篇文章：[前端使用puppeteer 爬虫生成《React.js 小书》PDF并合并](https://juejin.im/post/5b86732451882542af1c8082)
