@@ -62,12 +62,16 @@ function $$(selector, node){
 		<p>
 			本<a href="http://huziketang.mangojuice.top/books/react/" target="_blank">《React.js小书》</a>的PDF版本
 			<br />
-			是由<a href="http://lxchuan12.github.io" target="_blank">
-				若川
+			是由<a href="https://lxchuan12.cn" target="_blank">
+				若川 https://lxchuan12.cn
 			</a>
 			<br/>
 			使用<a href="https://github.com/GoogleChrome/puppeteer" target="_blank">node 库 puppeteer爬虫生成</a>，
 			仅供学习交流，严禁用于商业用途。
+			<br/>
+			<a href="https://juejin.im/post/5b86732451882542af1c8082" target="_blank">
+				文章 前端使用puppeteer 爬虫生成《React.js 小书》PDF并合并：https://juejin.im/post/5b86732451882542af1c8082
+			</a>
 			<br/>
 			<a href="https://github.com/lxchuan12/learn-nodejs/tree/master/src/puppeteer/reactMiniBook.js" target="_blank">
 				项目源代码地址：https://github.com/lxchuan12/learn-nodejs/tree/master/src/puppeteer/reactMiniBook.js
